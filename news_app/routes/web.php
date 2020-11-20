@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 // 管理側
-
 Route::group(['middleware' => ['auth.admin']], function() {
 
     // 管理側トップ
@@ -24,7 +23,7 @@ Route::group(['middleware' => ['auth.admin']], function() {
     Route::post('/admin/logout', 'admin\AdminLogoutController@logout');
 
     // ユーザ一覧
-    Route::get('/admin/user/list', 'admin\ManageUserController@showUserList');
+    Route::get('/admin/user_list', 'admin\ManageUserController@showUserList');
 
     // ユーザ登録
     Route::get('/admin/user/create', 'admin\ManageUserController@showUserCreateForm');
@@ -32,11 +31,13 @@ Route::group(['middleware' => ['auth.admin']], function() {
 
     // ユーザ詳細
     Route::get('/admin/user/{id}', 'admin\ManageUserController@showUserDetail');
+    Route::post('/admin/user/{id}', 'admin\ManageUserController@update');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/u/{name}', 'UserPageController@show');
 
 //管理側ログイン
 Route::get('/admin/login', 'admin\AdminLoginController@showLoginform');
