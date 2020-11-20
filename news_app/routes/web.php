@@ -34,6 +34,18 @@ Route::group(['middleware' => ['auth.admin']], function() {
     Route::post('/admin/user/{id}', 'admin\ManageUserController@update');
 });
 
+// 記事作成
+Route::group(['middleware' => ['auth']], function () {
+	//記事の作成
+	Route::get('/news/create', 'user\ManageEntryController@showCreateForm');
+	Route::post('/news/create', 'user\ManageEntryController@create');
+	//記事の編集
+	Route::get('/news/edit/{id}', 'user\ManageEntryController@showEditForm');
+	Route::post('news/edit/{id}', 'user\ManageEntryController@update');
+	//記事の削除
+	Route::post('/news/delete/{id}', 'user\ManageEntryController@delete');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
